@@ -1,0 +1,16 @@
+version: "3.9"
+
+services:
+  db:
+    image: khaller/graphdb-free:10.0.0
+    command: ["--GDB_HEAP_SIZE", "${GDB_HEAP_SIZE}"]
+    ports:
+      - 127.0.0.1:7270:7200
+    volumes:
+      - "./config:/repository.init/pokemon:rw"
+      - "./data/poke-a.nq:/repository.init/pokemon/toLoad/poke-a.nq:ro"
+      - "./data/pokemon.ttl:/ontology/pokemon.ttl:ro"
+      - "./data/foaf.rdf:/ontology/foaf.rdf:ro"
+      - "./db/data:/opt/graphdb/data:rw"
+      - "./db/logs:/opt/graphdb/logs:rw"
+      - "./db/work:/opt/graphdb/work:rw"

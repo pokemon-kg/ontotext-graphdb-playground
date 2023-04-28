@@ -1,0 +1,1125 @@
+@prefix : <https://pokemonkg.org/ontology#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <https://pokemonkg.org/ontology> .
+
+<https://pokemonkg.org/ontology> rdf:type owl:Ontology ;
+                                  owl:versionIRI <https://purl.org/pokeont/version/1.0.0> ;
+                                  <http://creativecommons.org/ns#attributionName> "Kevin Haller" ;
+                                  <http://creativecommons.org/ns#attributionURL> "https://purl.org/pokeont"^^xsd:anyURI ;
+                                  <http://creativecommons.org/ns#license> <https://creativecommons.org/licenses/by/4.0/> ;
+                                  <http://purl.org/dc/terms/created> "2019-07-27T23:00:00"@en ;
+                                  <http://purl.org/dc/terms/creator> <https://kevinhaller.dev/id#me> ;
+                                  <http://purl.org/dc/terms/description> "Eine Ontologie, die versucht die Pokémon Welt, wie sie in der Anime TV Serie und in den Spielen präsentiert wird, zu beschreiben."@de ,
+                                                                         "Ontology covering the Pokémon world as it is presented in games and anime television series."@en ;
+                                  <http://purl.org/dc/terms/title> "Pokémon Ontologie"@de ,
+                                                                   "Pokémon Ontology"@en ;
+                                  <http://purl.org/ontology/bibo/status> <http://purl.org/ontology/bibo/status/draft> ;
+                                  <http://purl.org/vocab/vann/preferredNamespacePrefix> "poke" ;
+                                  <http://purl.org/vocab/vann/preferredNamespaceUri> "https://pokemonkg.org/ontology#"@en .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://creativecommons.org/ns#attributionName
+<http://creativecommons.org/ns#attributionName> rdf:type owl:AnnotationProperty .
+
+
+###  http://creativecommons.org/ns#attributionURL
+<http://creativecommons.org/ns#attributionURL> rdf:type owl:AnnotationProperty .
+
+
+###  http://creativecommons.org/ns#license
+<http://creativecommons.org/ns#license> rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/created
+<http://purl.org/dc/terms/created> rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/creator
+<http://purl.org/dc/terms/creator> rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/description
+<http://purl.org/dc/terms/description> rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/title
+<http://purl.org/dc/terms/title> rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/ontology/bibo/status
+<http://purl.org/ontology/bibo/status> rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/vocab/vann/preferredNamespacePrefix
+<http://purl.org/vocab/vann/preferredNamespacePrefix> rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/vocab/vann/preferredNamespaceUri
+<http://purl.org/vocab/vann/preferredNamespaceUri> rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#altLabel
+<http://www.w3.org/2004/02/skos/core#altLabel> rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  https://pokemonkg.org/ontology#containsPlace
+:containsPlace rdf:type owl:ObjectProperty ;
+               owl:inverseOf :locatedIn ;
+               rdf:type owl:AsymmetricProperty ,
+                        owl:TransitiveProperty ;
+               rdfs:domain :Place ;
+               rdfs:range :Place ;
+               rdfs:comment "A place is contained to some extent in this place."@en ,
+                            "Ein Ort ist in gewissem Maße in diesem Ort enthalten."@de ;
+               rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+               rdfs:label "beinhaltet Ort"@de ,
+                          "contains place"@en .
+
+
+###  https://pokemonkg.org/ontology#describedInPokédex
+:describedInPokédex rdf:type owl:ObjectProperty ;
+                    owl:inverseOf :describesPokémon ;
+                    rdf:type owl:InverseFunctionalProperty ;
+                    rdfs:domain :Species ;
+                    rdfs:range :PokédexEntry ;
+                    rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+                    rdfs:label "described in Pokédex entry"@en ,
+                               "in Pokédex Eintrag beschrieben"@de .
+
+
+###  https://pokemonkg.org/ontology#describesPokémon
+:describesPokémon rdf:type owl:ObjectProperty ,
+                           owl:FunctionalProperty ;
+                  rdfs:domain :PokédexEntry ;
+                  rdfs:range :Species ;
+                  rdfs:comment "A Pokémon that is described by this Pokédex entry."@en ,
+                               "Ein Pokémon, das von diesem Pokédex Eintrag beschrieben wird."@de ;
+                  rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+                  rdfs:label "beschreibt Pokémon"@de ,
+                             "describes Pokémon"@en .
+
+
+###  https://pokemonkg.org/ontology#evolvesFrom
+:evolvesFrom rdf:type owl:ObjectProperty ;
+             owl:inverseOf :evolvesTo ;
+             rdfs:domain :Species ;
+             rdfs:range :Species ;
+             rdfs:comment "Diese Spezie entwickelt sich von einer anderen Spezies."@de ,
+                          "This species evolves from the other species."@en ;
+             rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+             rdfs:label "entwickelt sich von"@de ,
+                        "evolves from"@en .
+
+
+###  https://pokemonkg.org/ontology#evolvesTo
+:evolvesTo rdf:type owl:ObjectProperty ;
+           rdfs:domain :Species ;
+           rdfs:range :Species ;
+           rdfs:comment "Diese Spezie kann sich in eine andere Spezie entwickeln."@de ,
+                        "This species can evolve in another species."@en ;
+           rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+           rdfs:label "entwickelt sich in"@de ,
+                      "evolves to"@en .
+
+
+###  https://pokemonkg.org/ontology#featuresSpecies
+:featuresSpecies rdf:type owl:ObjectProperty ;
+                 rdfs:range :Species ;
+                 owl:propertyChainAxiom ( :hasPokédexEntry
+                                          :describesPokémon
+                                        ) ;
+                 rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+                 rdfs:label "features Species"@en .
+
+
+###  https://pokemonkg.org/ontology#foundIn
+:foundIn rdf:type owl:ObjectProperty ;
+         rdfs:domain :Species ;
+         rdfs:range :Habitat ;
+         rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+         rdfs:label "found in"@en ,
+                    "kommt vor in"@de .
+
+
+###  https://pokemonkg.org/ontology#hasColour
+:hasColour rdf:type owl:ObjectProperty ;
+           rdfs:range <http://dbpedia.org/ontology/Colour> ;
+           rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+           rdfs:label "has colour"@en ,
+                      "hat Farbe"@de .
+
+
+###  https://pokemonkg.org/ontology#hasFlavor
+:hasFlavor rdf:type owl:ObjectProperty ;
+           rdfs:domain :Food ;
+           rdfs:range :Flavor ;
+           rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+           rdfs:label "has flavor"@en ,
+                      "hat Geschmacksrichtung"@de .
+
+
+###  https://pokemonkg.org/ontology#hasPokédexEntry
+:hasPokédexEntry rdf:type owl:ObjectProperty ,
+                          owl:InverseFunctionalProperty ;
+                 rdfs:domain :Pokédex ;
+                 rdfs:range :PokédexEntry ;
+                 rdfs:comment "A Pokédex entry in which this Pokémon is described."@en ,
+                              "Ein Pokédex Eintrag in welchen über dieses Pokémon informiert wird."@de ;
+                 rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+                 rdfs:label "has Pokédex entry"@en ,
+                            "hat Pokédex Eintrag"@de .
+
+
+###  https://pokemonkg.org/ontology#hasShape
+:hasShape rdf:type owl:ObjectProperty ;
+          rdfs:domain :Species ;
+          rdfs:range :Shape ;
+          rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+          rdfs:label "has shape"@en ,
+                     "hat Silhouette"@de .
+
+
+###  https://pokemonkg.org/ontology#hasSize
+:hasSize rdf:type owl:ObjectProperty ;
+         rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+         rdfs:label "has size"@en ,
+                    "hat Größe"@de .
+
+
+###  https://pokemonkg.org/ontology#hasType
+:hasType rdf:type owl:ObjectProperty ;
+         rdfs:range :Type ;
+         rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+         rdfs:label "has Type"@en ,
+                    "hat Typ"@de .
+
+
+###  https://pokemonkg.org/ontology#inEggGroup
+:inEggGroup rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf owl:topObjectProperty ;
+            rdfs:domain :Species ;
+            rdfs:range :EggGroup ;
+            rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+            rdfs:label "in Ei-Gruppe"@de ,
+                       "in egg group"@en .
+
+
+###  https://pokemonkg.org/ontology#learnsMove
+:learnsMove rdf:type owl:ObjectProperty ;
+            rdfs:domain :MoveLearning ;
+            rdfs:range :Move ;
+            rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+            rdfs:label "learns move"@en ,
+                       "lernt Aktion"@de .
+
+
+###  https://pokemonkg.org/ontology#locatedIn
+:locatedIn rdf:type owl:ObjectProperty ,
+                    owl:AsymmetricProperty ,
+                    owl:TransitiveProperty ;
+           rdfs:domain :Place ;
+           rdfs:range :Place ;
+           rdfs:comment "Dieser Ort befindet sich in einem gewissen Maße in einem anderen Ort."@de ,
+                        "This place is located to some extent in another place."@en ;
+           rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+           rdfs:label "enthalten in"@de ,
+                      "located in"@en .
+
+
+###  https://pokemonkg.org/ontology#mayHaveAbility
+:mayHaveAbility rdf:type owl:ObjectProperty ;
+                rdfs:domain :Species ;
+                rdfs:range :Ability ;
+                rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+                rdfs:label "könnte Fähigkeit besitzen"@de ,
+                           "may have ability"@en .
+
+
+###  https://pokemonkg.org/ontology#mayHaveHiddenAbility
+:mayHaveHiddenAbility rdf:type owl:ObjectProperty ;
+                      rdfs:subPropertyOf :mayHaveAbility ;
+                      rdfs:domain :Species ;
+                      rdfs:range :Ability ;
+                      rdfs:label <https://pokemonkg.org/ontology> ,
+                                 "könnte versteckte Fähigkeit haben"@de ,
+                                 "may have hidden ability"@en .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  https://pokemonkg.org/ontology#accuracy
+:accuracy rdf:type owl:DatatypeProperty ;
+          rdfs:domain :Move ;
+          rdfs:range xsd:integer ;
+          rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+          rdfs:label "has accuracy"@en ,
+                     "hat Genauigkeit"@de .
+
+
+###  https://pokemonkg.org/ontology#basePower
+:basePower rdf:type owl:DatatypeProperty ;
+           rdfs:domain :Move ;
+           rdfs:range xsd:integer ;
+           rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+           rdfs:label "has base power"@en ,
+                      "hat Basisstärke"@de .
+
+
+###  https://pokemonkg.org/ontology#basePowerPoints
+:basePowerPoints rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf owl:topDataProperty ;
+                 rdfs:domain :Move ;
+                 rdfs:range xsd:integer ;
+                 rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+                 rdfs:label "has base power points"@en ,
+                            "hat Basis-Angriffspunkte"@de .
+
+
+###  https://pokemonkg.org/ontology#effectDescription
+:effectDescription rdf:type owl:DatatypeProperty ;
+                   rdfs:domain [ rdf:type owl:Class ;
+                                 owl:unionOf ( :Ability
+                                               :Move
+                                             )
+                               ] ;
+                   rdfs:label "effect description"@en .
+
+
+###  https://pokemonkg.org/ontology#entryNumber
+:entryNumber rdf:type owl:DatatypeProperty ,
+                      owl:FunctionalProperty ;
+             rdfs:domain :PokédexEntry ;
+             rdfs:range xsd:int ;
+             rdfs:comment "Der Pokédex Eintrag hat folgende Nummer, die eindeutig sein muss."@de ,
+                          "This Pokédex entry has the given number, which has to be unique."@en ;
+             rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+             rdfs:label "has entry number"@en ,
+                        "hat Eintragsnummer"@de .
+
+
+###  https://pokemonkg.org/ontology#firmness
+:firmness rdf:type owl:DatatypeProperty ;
+          rdfs:domain :Food ;
+          rdfs:range xsd:integer ;
+          rdfs:label "has firmness"@en ,
+                     "hat Güte"@de .
+
+
+###  https://pokemonkg.org/ontology#hasGenus
+:hasGenus rdf:type owl:DatatypeProperty ;
+          rdfs:domain :Species ;
+          rdfs:label "has genus"@en ,
+                     "hat Gattung"@de .
+
+
+###  https://pokemonkg.org/ontology#maxPowerPoints
+:maxPowerPoints rdf:type owl:DatatypeProperty ;
+                rdfs:domain :Move ;
+                rdfs:range xsd:integer ;
+                rdfs:label <https://pokemonkg.org/ontology> ,
+                           "has maximum power points"@en ,
+                           "hat maximale Agriffspunkte"@de .
+
+
+###  https://pokemonkg.org/ontology#minLevelToLearn
+:minLevelToLearn rdf:type owl:DatatypeProperty ;
+                 rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+                 rdfs:label "braucht mininum Level zum Erlernen"@de ,
+                            "needs minimum level to learn"@en .
+
+
+###  https://pokemonkg.org/ontology#smoothness
+:smoothness rdf:type owl:DatatypeProperty ;
+            rdfs:domain :Food ;
+            rdfs:range xsd:integer ;
+            rdfs:label "has smoothness"@en ,
+                       "hat Glätte"@de .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://dbpedia.org/ontology/Colour
+<http://dbpedia.org/ontology/Colour> rdf:type owl:Class .
+
+
+###  http://xmlns.com/foaf/0.1/Person
+<http://xmlns.com/foaf/0.1/Person> rdf:type owl:Class .
+
+
+###  https://pokemonkg.org/ontology#Ability
+:Ability rdf:type owl:Class ;
+         owl:disjointUnionOf ( :Flavor
+                               :Generation
+                               :Item
+                             ) ;
+         rdfs:comment "Abilities were introduced in Generation III as an all new game mechanic. Each and every Pokémon has an ability, and can only have one at a time. Some abilities are exclusive to certain Pokémon and Evolution lines, while others are known by many Pokémon."@en ,
+                      "Fähigkeiten wurden in Generation III als völlig neue Spielmechanik eingeführt. Jeder einzelne Pokémon hat eine Fähigkeit und kann nur eine auf einmal haben. Einige Fähigkeiten sind exklusiv für bestimmte Pokémon- und Evolutionslinien, während andere von vielen Pokémon bekannt sind."@de ;
+         rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+         rdfs:label "Ability"@en ,
+                    "Fähigkeit"@de .
+
+
+###  https://pokemonkg.org/ontology#BattleItem
+:BattleItem rdf:type owl:Class ;
+            rdfs:subClassOf :Item ;
+            rdfs:isDefinedBy <https://pokemonkg.org/ontology> .
+
+
+###  https://pokemonkg.org/ontology#Berry
+:Berry rdf:type owl:Class ;
+       rdfs:subClassOf :Food ;
+       rdfs:comment "Beeren sind kleine, saftige, fleischige Früchte. Wie in der realen Welt gibt es auch in der Pokémon-Welt eine große Vielfalt mit einer großen Auswahl an Geschmacksrichtungen, Namen und Effekten. Erstmals in den Spielen der Generation II gefunden, sind viele Beeren inzwischen zu kritischen Gegenständen im Kampf geworden, wo ihre verschiedenen Effekte die Wiederherstellung von HP und Statuszustand, Statikverbesserung und sogar Schadensverneinung beinhalten."@de ,
+                    "Berries are small, juicy, fleshy fruit. As in the real world, a large variety exists in the Pokémon world, with a large range of flavors, names, and effects. First found in the Generation II games, many Berries have since become critical held items in battle, where their various effects include HP and status condition restoration, stat enhancement, and even damage negation."@en ;
+       rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+       rdfs:label "Beere"@de ,
+                  "Berry"@en .
+
+
+###  https://pokemonkg.org/ontology#EggGroup
+:EggGroup rdf:type owl:Class ;
+          rdfs:comment "Egg group is a category that determines which Pokémon are able to interbreed. The concept was introduced in Generation II, along with breeding. Similar to types, a Pokémon may belong to either one or two egg groups."@en ;
+          rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+          rdfs:label "Egg Group"@en ,
+                     "Ei-Gruppe"@de .
+
+
+###  https://pokemonkg.org/ontology#Flavor
+:Flavor rdf:type owl:Class ;
+        rdfs:comment "Flavor is a special set of attributes that certain foods in the Pokémon world have. Most of the foods can have more than one flavor attributed to them."@en ,
+                     "Geschmacksrichtung ist ein spezielles Attribut für Nahrung in der Pokémon-Welt. Den meisten Nahrungen können mehr als eine Geschmacksrichtung haben."@de ;
+        rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+        rdfs:label "Flavor"@en ,
+                   "Geschmacksrichtung"@de .
+
+
+###  https://pokemonkg.org/ontology#Food
+:Food rdf:type owl:Class ;
+      rdfs:subClassOf :Item ;
+      rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+      rdfs:label "Food"@en ,
+                 "Nahrung"@de .
+
+
+###  https://pokemonkg.org/ontology#Game
+:Game rdf:type owl:Class ;
+      rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+      rdfs:label "Game"@en ,
+                 "Spiel"@de .
+
+
+###  https://pokemonkg.org/ontology#Generation
+:Generation rdf:type owl:Class ;
+            rdfs:comment "Generation bezieht sich auf die Pokémon-Spieleserie. Es ist eine Gruppe von Spielen, die zur gleichen Zeit oder etwa zur gleichen Zeit veröffentlicht wurden. Es bedeutet auch, dass Spiele in der gleichen Generation mit den anderen kompatibel sind, die den gleichen Pokémon enthalten und die Anzahl der Züge, die dort gelernt werden müssen."@de ,
+                         "Generation refers to the Pokémon game series. It is a group of games that were released at or around the same time. It also means that games in the same generation are compatible with the others, containing the same Pokémon and the number of moves there are to be learned."@en ;
+            rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+            rdfs:label "Generation"@de ,
+                       "Generation"@en .
+
+
+###  https://pokemonkg.org/ontology#Gym
+:Gym rdf:type owl:Class ;
+     rdfs:subClassOf :Place ;
+     rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+     rdfs:label "Arena"@de ,
+                "Gym"@en .
+
+
+###  https://pokemonkg.org/ontology#GymLeader
+:GymLeader rdf:type owl:Class ;
+           rdfs:subClassOf :Trainer ;
+           rdfs:comment "A gym leader is the highest-ranking member and owner of an official Pokémon Gym. Gym leaders use their gyms and their Pokémon to test the skills of trainers that challenge them, and if said trainers win a battle, the gym leader will gift them with a badge that's unique to that specific gym."@en ;
+           rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+           rdfs:label "Arenaleiter"@de ,
+                      "Gym Leader"@en .
+
+
+###  https://pokemonkg.org/ontology#HM
+:HM rdf:type owl:Class ;
+    rdfs:subClassOf :Item ,
+                    :MoveLearning ;
+    rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+    rdfs:label "Hidden Machine"@en ,
+               "Versteckte Maschine"@de .
+
+
+###  https://pokemonkg.org/ontology#Habitat
+:Habitat rdf:type owl:Class ;
+         rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+         rdfs:label "Habitat"@en ,
+                    "Lebensraum"@de .
+
+
+###  https://pokemonkg.org/ontology#HoldItem
+:HoldItem rdf:type owl:Class ;
+          rdfs:subClassOf :Item ;
+          rdfs:isDefinedBy <https://pokemonkg.org/ontology> .
+
+
+###  https://pokemonkg.org/ontology#Item
+:Item rdf:type owl:Class ;
+      rdfs:comment "An item is an object in the Pokémon games which the player can pick up, keep in their Bag, and use in some manner. They have various uses, including healing, powering up, helping one to catch Pokémon, or to access a new area."@en ,
+                   "Ein Gegenstand ist ein Objekt in den Pokémon-Spielen, welches der Spieler aufheben, in seiner Tasche aufbewahren und in irgendeiner Weise verwenden kann. Sie haben verschiedene Verwendungsmöglichkeiten, einschließlich Heilung, Auftanken, Hilfe beim Fangen von Pokémon oder beim Betreten eines neuen Gebietes."@de ;
+      rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+      rdfs:label "Item"@de ,
+                 "Item"@en ;
+      <http://www.w3.org/2004/02/skos/core#altLabel> "Gegenstand"@de .
+
+
+###  https://pokemonkg.org/ontology#LearningByLevelingUp
+:LearningByLevelingUp rdf:type owl:Class ;
+                      rdfs:subClassOf :MoveLearning ;
+                      rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+                      rdfs:label "Erlernen durch Aufleveln"@de ,
+                                 "Learning by leveling up"@en .
+
+
+###  https://pokemonkg.org/ontology#LearningThroughBreeding
+:LearningThroughBreeding rdf:type owl:Class ;
+                         rdfs:subClassOf :MoveLearning ;
+                         rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+                         rdfs:label "Erlernen durch Züchtung"@de ,
+                                    "Learning through breeding"@en .
+
+
+###  https://pokemonkg.org/ontology#Medicine
+:Medicine rdf:type owl:Class ;
+          rdfs:subClassOf :Item ;
+          rdfs:comment "Medicine items can heal various afflictions of a Pokémon."@en ,
+                       "Medizin kann verschiedene Leiden eines Pokémon heilen."@de ;
+          rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+          rdfs:label "Medicine"@en ,
+                     "Medizin"@de .
+
+
+###  https://pokemonkg.org/ontology#Move
+:Move rdf:type owl:Class ;
+      owl:disjointUnionOf ( :Flavor
+                            :Game
+                            :Generation
+                            :Item
+                            :Place
+                            :Pokédex
+                            :PokédexEntry
+                            :Pokémon
+                            :Region
+                            :Type
+                          ) ;
+      rdfs:comment "A Move is a technique that a Pokémon uses during Battles. Moves are mainly used to inflict damage on the opponent. Moves usually come from a natural ability that the specific Pokémon has. Some moves can be used both inside and outside of battle. When outside of battle, moves are usually used for transportation or for removing a certain obstacle that the player runs into in the game."@en ,
+                   "Eine Aktion ist eine Technik, die ein Pokémon während eines Kampfes anwendet. Züge werden hauptsächlich verwendet, um dem Gegner Schaden zuzufügen. Züge kommen normalerweise von einer natürlichen Fähigkeit, die der bestimmte Pokémon hat. Einige Züge können sowohl innerhalb als auch außerhalb des Kampfes verwendet werden. Außerhalb des Kampfes werden Züge normalerweise für den Transport oder zum Entfernen eines bestimmten Hindernisses verwendet, auf das der Spieler im Spiel stößt."@de ;
+      rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+      rdfs:label "Aktion"@de ,
+                 "Move"@en .
+
+
+###  https://pokemonkg.org/ontology#MoveLearning
+:MoveLearning rdf:type owl:Class ;
+              rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+              rdfs:label "Aktionserlernen"@de ,
+                         "Move learning"@en .
+
+
+###  https://pokemonkg.org/ontology#PhysicalMove
+:PhysicalMove rdf:type owl:Class ;
+              rdfs:subClassOf :Move ;
+              rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+              rdfs:label "Physical Move"@en ,
+                         "Physische Aktion"@de .
+
+
+###  https://pokemonkg.org/ontology#Place
+:Place rdf:type owl:Class ;
+       rdfs:comment "Entities that have a somewhat fixed, physical extension."@en ,
+                    "Entitäten, die eine einigermaßen feste, physische Ausdehnung haben."@de ;
+       rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+       rdfs:label "Ort"@de ,
+                  "Place"@en .
+
+
+###  https://pokemonkg.org/ontology#Pokéball
+:Pokéball rdf:type owl:Class ;
+          rdfs:subClassOf :Item ;
+          rdfs:comment "A Poké Ball is a type of item that is critical to a Trainer's quest, used for catching and storing Pokémon."@en ,
+                       "Ein Poké-Ball ist eine Art von Gegenstand, der für die Aufgabe eines Trainers entscheidend ist und zum Fangen und Aufbewahren von Pokémon verwendet wird."@de ;
+          rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+          rdfs:label "Poké Ball"@de ,
+                     "Poké Ball"@en .
+
+
+###  https://pokemonkg.org/ontology#Pokédex
+:Pokédex rdf:type owl:Class ;
+         owl:disjointUnionOf ( :Pokémon
+                               :Type
+                             ) ;
+         rdfs:comment "Der Pokédex ist ein elektronisches Gerät, das entwickelt wurde, um die verschiedenen Arten von Pokémon zu katalogisieren und Informationen über sie zu liefern, die in den Videospiel-, Anime und Manga-Serien von Pokémon enthalten sind."@de ,
+                      "The Pokédex is an electronic device designed to catalogue and provide information regarding the various species of Pokémon featured in the Pokémon video game, anime and manga series."@en ;
+         rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+         rdfs:label "Pokédex"@de ,
+                    "Pokédex"@en .
+
+
+###  https://pokemonkg.org/ontology#PokédexEntry
+:PokédexEntry rdf:type owl:Class ;
+              owl:disjointUnionOf ( :Move
+                                    :Pokédex
+                                    :Pokémon
+                                    :Type
+                                  ) ;
+              rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+              rdfs:label "Pokédex Eintrag"@de ,
+                         "Pokédex Entry"@en .
+
+
+###  https://pokemonkg.org/ontology#Pokémon
+:Pokémon rdf:type owl:Class ;
+         owl:disjointUnionOf ( :Pokédex
+                               :Type
+                             ) ;
+         rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+         rdfs:label "Pokémon"@de ,
+                    "Pokémon"@en ;
+         rdfs:seeAlso <http://dbpedia.org/resource/Pok%C3%A9mon> .
+
+
+###  https://pokemonkg.org/ontology#Region
+:Region rdf:type owl:Class ;
+        rdfs:subClassOf :Place ;
+        rdfs:comment "Regionen sind Gebiete im Pokémon-Universum, die kleinere Teile einer Nation darstellen."@de ,
+                     "Regions are areas in the Pokémon universe that are smaller parts of a nation."@en ;
+        rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+        rdfs:label "Region"@de ,
+                   "Region"@en .
+
+
+###  https://pokemonkg.org/ontology#Shape
+:Shape rdf:type owl:Class ;
+       owl:disjointUnionOf ( :Ability
+                             :EggGroup
+                             :Flavor
+                             :Game
+                             :Generation
+                             :Item
+                             :Move
+                             :Place
+                             :Pokédex
+                             :PokédexEntry
+                             :Pokémon
+                             :Species
+                             :Type
+                           ) ;
+       rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+       rdfs:label "Shape"@en ,
+                  "Silhouette"@de .
+
+
+###  https://pokemonkg.org/ontology#SpecialMove
+:SpecialMove rdf:type owl:Class ;
+             rdfs:subClassOf :Move ;
+             rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+             rdfs:label "Special Move"@en ,
+                        "Spezialaktion"@de .
+
+
+###  https://pokemonkg.org/ontology#Species
+:Species rdf:type owl:Class ;
+         owl:disjointUnionOf ( :Ability
+                               :EggGroup
+                               :Flavor
+                               :Game
+                               :Generation
+                               :Item
+                               :Move
+                               :Pokédex
+                               :PokédexEntry
+                               :Pokémon
+                               :Region
+                               :Type
+                             ) ;
+         rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+         rdfs:label "Species"@en ,
+                    "Spezie"@de .
+
+
+###  https://pokemonkg.org/ontology#StatusMove
+:StatusMove rdf:type owl:Class ;
+            rdfs:subClassOf :Move ;
+            rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+            rdfs:label "Status Move"@en ,
+                       "Statusaktion"@de .
+
+
+###  https://pokemonkg.org/ontology#TM
+:TM rdf:type owl:Class ;
+    rdfs:subClassOf :Item ,
+                    :MoveLearning ;
+    rdfs:comment <https://pokemonkg.org/ontology> ,
+                 "A Technical Machine, or TM for short is an item that can be used to teach a Pokémon a move."@en ,
+                 "Eine Technische Maschine (TM) verhilft einem Pokémon dazu, eine bestimmte Attacke zu erlernen."@de ;
+    rdfs:label "Technical Machine"@en ,
+               "Technische Maschine"@de .
+
+
+###  https://pokemonkg.org/ontology#Town
+:Town rdf:type owl:Class ;
+      rdfs:subClassOf :Place ;
+      rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+      rdfs:label "Stadt"@de ,
+                 "Town"@en .
+
+
+###  https://pokemonkg.org/ontology#Trainer
+:Trainer rdf:type owl:Class ;
+         rdfs:subClassOf <http://xmlns.com/foaf/0.1/Person> ;
+         rdfs:comment "Pokémon Trainer is a person who catches, occasionally names, and trains different kinds of Pokémon."@en ,
+                      "Pokémon Trainer ist eine Person, die verschiedene Arten von Pokémon fängt, gelegentlich benennt und trainiert."@de ;
+         rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+         rdfs:label "Trainer"@de ,
+                    "Trainer"@en .
+
+
+###  https://pokemonkg.org/ontology#Type
+:Type rdf:type owl:Class ;
+      owl:disjointUnionOf ( :Pokédex
+                            :Pokémon
+                          ) ;
+      rdfs:comment "All Pokémon creatures and their moves are assigned certain types. Each type has several strengths and weaknesses in both attack and defense."@en ,
+                   "Allen Pokémon-Kreaturen und ihren Attacken werden bestimmte Typen zugeordnet. Jeder Typ hat mehrere Stärken und Schwächen sowohl in Angriff als auch in Verteidigung."@de ;
+      rdfs:isDefinedBy <https://pokemonkg.org/ontology> ;
+      rdfs:label "Typ"@de ,
+                 "Type"@en .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  https://pokemonkg.org/ontology#EggGroup:Amorphous
+:EggGroup:Amorphous rdf:type owl:NamedIndividual ,
+                             :EggGroup ;
+                    rdfs:label "Amorph"@de ,
+                               "Amorphous"@en .
+
+
+###  https://pokemonkg.org/ontology#EggGroup:Bug
+:EggGroup:Bug rdf:type owl:NamedIndividual ,
+                       :EggGroup ;
+              rdfs:label "Bug"@en ,
+                         "Käfer"@de .
+
+
+###  https://pokemonkg.org/ontology#EggGroup:Ditto
+:EggGroup:Ditto rdf:type owl:NamedIndividual ,
+                         :EggGroup ;
+                rdfs:label "Ditto"@de ,
+                           "Ditto"@en .
+
+
+###  https://pokemonkg.org/ontology#EggGroup:Dragon
+:EggGroup:Dragon rdf:type owl:NamedIndividual ,
+                          :EggGroup ;
+                 rdfs:label "Drache"@de ,
+                            "Dragon"@en .
+
+
+###  https://pokemonkg.org/ontology#EggGroup:Fairy
+:EggGroup:Fairy rdf:type owl:NamedIndividual ,
+                         :EggGroup ;
+                rdfs:label "Fairy"@en ,
+                           "Fee"@de .
+
+
+###  https://pokemonkg.org/ontology#EggGroup:Field
+:EggGroup:Field rdf:type owl:NamedIndividual ,
+                         :EggGroup ;
+                rdfs:label "Feld"@de ,
+                           "Field"@en .
+
+
+###  https://pokemonkg.org/ontology#EggGroup:Flying
+:EggGroup:Flying rdf:type owl:NamedIndividual ,
+                          :EggGroup ;
+                 rdfs:label "Flug"@de ,
+                            "Flying"@en .
+
+
+###  https://pokemonkg.org/ontology#EggGroup:Grass
+:EggGroup:Grass rdf:type owl:NamedIndividual ,
+                         :EggGroup ;
+                rdfs:label "Grass"@en ,
+                           "Pflanze"@de .
+
+
+###  https://pokemonkg.org/ontology#EggGroup:Human-Like
+:EggGroup:Human-Like rdf:type owl:NamedIndividual ,
+                              :EggGroup ;
+                     rdfs:label "Human-like"@en ,
+                                "Humanotyp"@de .
+
+
+###  https://pokemonkg.org/ontology#EggGroup:Mineral
+:EggGroup:Mineral rdf:type owl:NamedIndividual ,
+                           :EggGroup ;
+                  rdfs:label "Mineral"@de ,
+                             "Mineral"@en .
+
+
+###  https://pokemonkg.org/ontology#EggGroup:Monster
+:EggGroup:Monster rdf:type owl:NamedIndividual ,
+                           :EggGroup ;
+                  rdfs:label "Monster"@de ,
+                             "Monster"@en .
+
+
+###  https://pokemonkg.org/ontology#EggGroup:Undiscovered
+:EggGroup:Undiscovered rdf:type owl:NamedIndividual ,
+                                :EggGroup ;
+                       rdfs:label "No Eggs Discovered"@en ,
+                                  "Unbekannt"@de .
+
+
+###  https://pokemonkg.org/ontology#EggGroup:Water1
+:EggGroup:Water1 rdf:type owl:NamedIndividual ,
+                          :EggGroup ;
+                 rdfs:label "Wasser 1"@de ,
+                            "Water 1"@en .
+
+
+###  https://pokemonkg.org/ontology#EggGroup:Water2
+:EggGroup:Water2 rdf:type owl:NamedIndividual ,
+                          :EggGroup ;
+                 rdfs:label "Wasser 2"@de ,
+                            "Water 2"@en .
+
+
+###  https://pokemonkg.org/ontology#EggGroup:Water3
+:EggGroup:Water3 rdf:type owl:NamedIndividual ,
+                          :EggGroup ;
+                 rdfs:label "Wasser 3"@de ,
+                            "Water 3"@en .
+
+
+###  https://pokemonkg.org/ontology#Flavor:Bitter
+:Flavor:Bitter rdf:type owl:NamedIndividual ,
+                        :Flavor ;
+               rdfs:label "bitter"@de ,
+                          "bitter"@en .
+
+
+###  https://pokemonkg.org/ontology#Flavor:Dry
+:Flavor:Dry rdf:type owl:NamedIndividual ,
+                     :Flavor ;
+            rdfs:label "dry"@en ,
+                       "trocken"@de .
+
+
+###  https://pokemonkg.org/ontology#Flavor:Sour
+:Flavor:Sour rdf:type owl:NamedIndividual ,
+                      :Flavor ;
+             rdfs:label "sauer"@de ,
+                        "sour"@en .
+
+
+###  https://pokemonkg.org/ontology#Flavor:Spicy
+:Flavor:Spicy rdf:type owl:NamedIndividual ,
+                       :Flavor ;
+              rdfs:label "scharf"@de ,
+                         "spicy"@en .
+
+
+###  https://pokemonkg.org/ontology#Flavor:Sweet
+:Flavor:Sweet rdf:type owl:NamedIndividual ,
+                       :Flavor ;
+              rdfs:label "sweet"@en ,
+                         "süß"@de .
+
+
+###  https://pokemonkg.org/ontology#Habitat:Cave
+:Habitat:Cave rdf:type owl:NamedIndividual ,
+                       :Habitat ;
+              rdfs:label "Cave"@en ,
+                         "Höhle"@de .
+
+
+###  https://pokemonkg.org/ontology#Habitat:Forest
+:Habitat:Forest rdf:type owl:NamedIndividual ,
+                         :Habitat ;
+                rdfs:label "Forest"@en ,
+                           "Wald"@de .
+
+
+###  https://pokemonkg.org/ontology#Habitat:Grassland
+:Habitat:Grassland rdf:type owl:NamedIndividual ,
+                            :Habitat ;
+                   rdfs:label "Gras"@de ,
+                              "Grassland"@en .
+
+
+###  https://pokemonkg.org/ontology#Habitat:Mountain
+:Habitat:Mountain rdf:type owl:NamedIndividual ,
+                           :Habitat ;
+                  rdfs:label "Berg"@de ,
+                             "Mountain"@en .
+
+
+###  https://pokemonkg.org/ontology#Habitat:Rare
+:Habitat:Rare rdf:type owl:NamedIndividual ,
+                       :Habitat ;
+              rdfs:label "Rare"@en ,
+                         "Selten"@de .
+
+
+###  https://pokemonkg.org/ontology#Habitat:RoughTerrain
+:Habitat:RoughTerrain rdf:type owl:NamedIndividual ,
+                               :Habitat ;
+                      rdfs:label "Rough terrain"@en ,
+                                 "Wildnis"@de .
+
+
+###  https://pokemonkg.org/ontology#Habitat:Sea
+:Habitat:Sea rdf:type owl:NamedIndividual ,
+                      :Habitat ;
+             rdfs:label "Sea"@en ,
+                        "Wasser"@de .
+
+
+###  https://pokemonkg.org/ontology#Habitat:Urban
+:Habitat:Urban rdf:type owl:NamedIndividual ,
+                        :Habitat ;
+               rdfs:label "Stadt"@de ,
+                          "Urban"@en .
+
+
+###  https://pokemonkg.org/ontology#Habitat:WatersEdge
+:Habitat:WatersEdge rdf:type owl:NamedIndividual ,
+                             :Habitat ;
+                    rdfs:label "Küste"@de ,
+                               "Water's edge"@en .
+
+
+###  https://pokemonkg.org/ontology#PokéType:Bug
+:PokéType:Bug rdf:type owl:NamedIndividual ,
+                       :Type ;
+              rdfs:label "Bug"@en ,
+                         "Käfer"@de .
+
+
+###  https://pokemonkg.org/ontology#PokéType:Dark
+:PokéType:Dark rdf:type owl:NamedIndividual ,
+                        :Type ;
+               rdfs:label "Dark"@en ,
+                          "Finsternis/Unlicht"@de .
+
+
+###  https://pokemonkg.org/ontology#PokéType:Dragon
+:PokéType:Dragon rdf:type owl:NamedIndividual ,
+                          :Type ;
+                 rdfs:label "Drachen"@de ,
+                            "Dragon"@en .
+
+
+###  https://pokemonkg.org/ontology#PokéType:Electric
+:PokéType:Electric rdf:type owl:NamedIndividual ,
+                            :Type ;
+                   rdfs:comment "Es gibt relativ wenige Electric Pokémon; tatsächlich wurden in der dritten Generation nur vier hinzugefügt. Die meisten basieren auf Nagetieren oder unbelebten Objekten."@de ,
+                                "There are relatively few Electric Pokémon; in fact only four were added in the third generation. Most are based on rodents or inanimate objects."@en ;
+                   rdfs:label "Electric"@en ,
+                              "Elektro"@de .
+
+
+###  https://pokemonkg.org/ontology#PokéType:Fairy
+:PokéType:Fairy rdf:type owl:NamedIndividual ,
+                         :Type ;
+                rdfs:label "Fairy"@en ,
+                           "Fee"@de .
+
+
+###  https://pokemonkg.org/ontology#PokéType:Fighting
+:PokéType:Fighting rdf:type owl:NamedIndividual ,
+                            :Type ;
+                   rdfs:label "Fighting"@en ,
+                              "Kampf"@de .
+
+
+###  https://pokemonkg.org/ontology#PokéType:Fire
+:PokéType:Fire rdf:type owl:NamedIndividual ,
+                        :Type ;
+               rdfs:comment "Feuer ist eine der drei elementaren Grundtypen zusammen mit Wasser und Gras, die die drei Starter-Pokémon bilden. Dadurch entsteht ein einfaches Dreieck, um neuen Spielern das Typkonzept leicht zu erklären. Feuerarten sind in den frühen Phasen der Spiele notorisch selten, so dass die Wahl der Feuervariation am Start oft von Vorteil ist."@de ,
+                            "Fire is one of the three basic elemental types along with Water and Grass, which constitute the three starter Pokémon. This creates a simple triangle to explain the type concept easily to new players. Fire types are notoriously rare in the early stages of the games so choosing the Fire variation starter is often a plus."@en ;
+               rdfs:label "Feuer"@de ,
+                          "Fire"@en .
+
+
+###  https://pokemonkg.org/ontology#PokéType:Flying
+:PokéType:Flying rdf:type owl:NamedIndividual ,
+                          :Type ;
+                 rdfs:label "Flug"@de ,
+                            "Flying"@en .
+
+
+###  https://pokemonkg.org/ontology#PokéType:Ghost
+:PokéType:Ghost rdf:type owl:NamedIndividual ,
+                         :Type ;
+                rdfs:label "Geist"@de ,
+                           "Ghost"@en .
+
+
+###  https://pokemonkg.org/ontology#PokéType:Grass
+:PokéType:Grass rdf:type owl:NamedIndividual ,
+                         :Type ;
+                rdfs:comment "Gras ist einer der drei elementaren Grundtypen zusammen mit Feuer und Wasser, die die drei Starter-Pokémon bilden. Dadurch entsteht ein einfaches Dreieck, um neuen Spielern das Typkonzept leicht zu erklären."@de ,
+                             "Grass is one of the three basic elemental types along with Fire and Water, which constitute the three starter Pokémon. This creates a simple triangle to explain the type concept easily to new players."@en ;
+                rdfs:label "Grass"@en ,
+                           "Pflanze"@de .
+
+
+###  https://pokemonkg.org/ontology#PokéType:Ground
+:PokéType:Ground rdf:type owl:NamedIndividual ,
+                          :Type ;
+                 rdfs:label "Boden"@de ,
+                            "Ground"@en .
+
+
+###  https://pokemonkg.org/ontology#PokéType:Ice
+:PokéType:Ice rdf:type owl:NamedIndividual ,
+                       :Type ;
+              rdfs:label "Eis"@de ,
+                         "Ice"@en .
+
+
+###  https://pokemonkg.org/ontology#PokéType:Normal
+:PokéType:Normal rdf:type owl:NamedIndividual ,
+                          :Type ;
+                 rdfs:comment "Der Normaltyp ist der grundlegendste Typ von Pokémon. Sie sind sehr häufig und erscheinen ab der ersten Route, die Sie besuchen. Die meisten normalen Pokémon sind Einzeltypen."@de ,
+                              "The Normal type is the most basic type of Pokémon. They are very common and appear from the very first route you visit. Most Normal Pokémon are single type."@en ;
+                 rdfs:label "Normal"@de ,
+                            "Normal"@en .
+
+
+###  https://pokemonkg.org/ontology#PokéType:Poison
+:PokéType:Poison rdf:type owl:NamedIndividual ,
+                          :Type ;
+                 rdfs:label "Gift"@de ,
+                            "Poison"@en .
+
+
+###  https://pokemonkg.org/ontology#PokéType:Psychic
+:PokéType:Psychic rdf:type owl:NamedIndividual ,
+                           :Type ;
+                  rdfs:label "Psychic"@en ,
+                             "Psycho"@de .
+
+
+###  https://pokemonkg.org/ontology#PokéType:Rock
+:PokéType:Rock rdf:type owl:NamedIndividual ,
+                        :Type ;
+               rdfs:label "Gestein"@de ,
+                          "Rock"@en .
+
+
+###  https://pokemonkg.org/ontology#PokéType:Shadow
+:PokéType:Shadow rdf:type owl:NamedIndividual ;
+                 rdfs:label "Crypto"@de ,
+                            "Shadow"@en .
+
+
+###  https://pokemonkg.org/ontology#PokéType:Steel
+:PokéType:Steel rdf:type owl:NamedIndividual ,
+                         :Type ;
+                rdfs:label "Stahl"@de ,
+                           "Steel"@en .
+
+
+###  https://pokemonkg.org/ontology#PokéType:Water
+:PokéType:Water rdf:type owl:NamedIndividual ,
+                         :Type ;
+                rdfs:comment "Wasser ist einer der drei elementaren Grundtypen zusammen mit Feuer und Gras, die die drei Starter-Pokémon bilden. Dadurch entsteht ein einfaches Dreieck, um neuen Spielern das Typkonzept leicht zu erklären. Wasser ist die häufigste Art mit über 100 Pokémon, die auf einer Vielzahl von Fischen und anderen Meeresbewohnern basieren."@de ,
+                             "Water is one of the three basic elemental types along with Fire and Grass, which constitute the three starter Pokémon. This creates a simple triangle to explain the type concept easily to new players. Water is the most common type with over 100 Pokémon, which are based on a wide variety of fish and other sea-dwelling creatures."@en ;
+                rdfs:label "Wasser"@de ,
+                           "Water"@en .
+
+
+###  https://pokemonkg.org/ontology#Shape:Armor
+:Shape:Armor rdf:type owl:NamedIndividual ,
+                      :Shape .
+
+
+###  https://pokemonkg.org/ontology#Shape:Arms
+:Shape:Arms rdf:type owl:NamedIndividual ,
+                     :Shape .
+
+
+###  https://pokemonkg.org/ontology#Shape:Ball
+:Shape:Ball rdf:type owl:NamedIndividual ,
+                     :Shape .
+
+
+###  https://pokemonkg.org/ontology#Shape:Blob
+:Shape:Blob rdf:type owl:NamedIndividual ,
+                     :Shape .
+
+
+###  https://pokemonkg.org/ontology#Shape:BugWings
+:Shape:BugWings rdf:type owl:NamedIndividual ,
+                         :Shape .
+
+
+###  https://pokemonkg.org/ontology#Shape:Fish
+:Shape:Fish rdf:type owl:NamedIndividual ,
+                     :Shape .
+
+
+###  https://pokemonkg.org/ontology#Shape:Heads
+:Shape:Heads rdf:type owl:NamedIndividual ,
+                      :Shape .
+
+
+###  https://pokemonkg.org/ontology#Shape:Humanoid
+:Shape:Humanoid rdf:type owl:NamedIndividual ,
+                         :Shape .
+
+
+###  https://pokemonkg.org/ontology#Shape:Legs
+:Shape:Legs rdf:type owl:NamedIndividual ,
+                     :Shape .
+
+
+###  https://pokemonkg.org/ontology#Shape:Quadruped
+:Shape:Quadruped rdf:type owl:NamedIndividual ,
+                          :Shape .
+
+
+###  https://pokemonkg.org/ontology#Shape:Squiggle
+:Shape:Squiggle rdf:type owl:NamedIndividual ,
+                         :Shape .
+
+
+###  https://pokemonkg.org/ontology#Shape:Tentacles
+:Shape:Tentacles rdf:type owl:NamedIndividual ,
+                          :Shape .
+
+
+###  https://pokemonkg.org/ontology#Shape:Upright
+:Shape:Upright rdf:type owl:NamedIndividual ,
+                        :Shape .
+
+
+###  https://pokemonkg.org/ontology#Shape:Wings
+:Shape:Wings rdf:type owl:NamedIndividual ,
+                      :Shape .
+
+
+###  Generated by the OWL API (version 5.1.14) https://github.com/owlcs/owlapi/
