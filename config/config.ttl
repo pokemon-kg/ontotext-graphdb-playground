@@ -1,0 +1,22 @@
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix rep: <http://www.openrdf.org/config/repository#>.
+@prefix sr: <http://www.openrdf.org/config/repository/sail#>.
+@prefix sail: <http://www.openrdf.org/config/sail#>.
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#>.
+
+[] a rep:Repository ;
+    rep:repositoryID "pokemon" ;
+    rdfs:label "Pokemon" ;
+    rep:repositoryImpl [
+        rep:repositoryType "graphdb:SailRepository" ;
+        sr:sailImpl [
+            sail:sailType "graphdb:Sail" ;
+            graphdb:entity-index-size "10000000" ;
+
+            graphdb:ruleset "owl2-rl-optimized" ;
+            graphdb:defaultNS "https://pokemonkg.org/repository.init/pokemon/ontology#;http://www.w3.org/1999/02/22-rdf-syntax-ns#;https://www.w3.org/2000/01/rdf-schema#;http://xmlns.com/foaf/0.1/;http://www.w3.org/ns/dcat#;http://www.w3.org/ns/prov#" ;
+            graphdb:imports "file:///repository.init/pokemon/ontology/pokemon.ttl;https://www.w3.org/1999/02/22-rdf-syntax-ns.ttl;https://www.w3.org/2000/01/rdf-schema.ttl;file:///repository.init/pokemon/ontology/foaf.rdf;https://www.w3.org/ns/dcat2.rdf;https://www.w3.org/ns/prov.rdf" ;
+
+        ]
+
+    ].

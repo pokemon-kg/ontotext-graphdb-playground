@@ -2,15 +2,25 @@ version: "3.9"
 
 services:
   db:
-    image: khaller/graphdb-free:10.0.0
+    image: khaller/graphdb-free:10.2.1
     command: ["--GDB_HEAP_SIZE", "${GDB_HEAP_SIZE}"]
     ports:
       - 127.0.0.1:7270:7200
     volumes:
-      - "./config:/repository.init/pokemon:rw"
+      # GrpahDB repository config
+      - "config-vol:/repository.init/pokemon:rw"
+      - "./config/config.ttl:/repository.init/pokemon/config.ttl:ro"
+      - "./config/sparql/fts.sparql:/repository.init/pokemon/sparql/fts.sparql:ro"
+      # instance data
       - "./data/poke-a.nq:/repository.init/pokemon/toLoad/poke-a.nq:ro"
-      - "./data/pokemon.ttl:/ontology/pokemon.ttl:ro"
-      - "./data/foaf.rdf:/ontology/foaf.rdf:ro"
-      - "./db/data:/opt/graphdb/data:rw"
-      - "./db/logs:/opt/graphdb/logs:rw"
-      - "./db/work:/opt/graphdb/work:rw"
+      # ontology data
+      - "./data/pokemon.ttl:/repository.init/pokemon/ontology/pokemon.ttl:ro"
+      - "./data/foaf.rdf:/repository.init/pokemon/ontology/foaf.rdf:ro"
+      # database data
+      - "db-vol:/opt/graphdb/data:rw"
+      - "db-vol:/opt/graphdb/logs:rw"
+      - "db-vol:/opt/graphdb/work:rw"
+
+volumes:
+  config-vol: {}
+  db-vol: {}
