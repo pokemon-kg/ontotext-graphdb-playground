@@ -2,8 +2,10 @@ version: "3.9"
 
 services:
   db:
-    image: khaller/graphdb-free:10.2.1
+    image: khaller/graphdb-free:${GDB_VERSION}
     command: ["--GDB_HEAP_SIZE", "${GDB_HEAP_SIZE}"]
+    environment:
+      - GDB_USER=1000
     ports:
       - 127.0.0.1:7270:7200
     volumes:
