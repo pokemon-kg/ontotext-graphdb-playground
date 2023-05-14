@@ -16,37 +16,6 @@ $ docker-compose up
 
 The GraphDB instance can now be found at [http://localhost:7270](http://localhost:7270).
 
-After a successful start of the container image, the data of the GraphDB
-instance is stored in the `db` folder. On Linux systems with SELinux enabled,
-the run of the container might fail, due to missing permission to read/write to
-this directory on the host filesystem. Then you can add a proper SELinux label
-to this directory with '`chcon -Rt svirt_sandbox_file_t ./db`', or disable
-SELinux with '`setenforce 0`'.
-
-```
-db
-├── data
-├── logs
-├── README.md
-└── work
-```
-
-Moreover, `.lock` files might be added to the `config` folder. These `.lock`
-files indicate that the initialization of the `pokemon` repository has been
-performed successfully. If you want to re-initialize the repository for some
-reason, you can delete these `.lock` files manually and restart the container.
-Alternatively, you can use the provided `clean-locks.sh` to delete these `.lock`
-files.
-
-```
-config
-├── config.ttl
-├── init.lock
-├── sparql
-├── sparql.lock
-└── toLoad
-```
-
 ## Sample queries
 
 ### Search for Snorlax using FTS index
