@@ -54,4 +54,4 @@ ORDER BY ASC (?nr)
 
 # Contact
 
-* Kevin Haller - [contact@kevinhaller.dev](mailto:contact@kevinhaller.dev)
+* [Kevin Haller](mailto:contact@kevinhaller.dev)
